@@ -37,7 +37,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-
 .cursor-ring { position: fixed; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(200,184,154,0.35); pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.25s, height 0.25s; }
 
 /* ── INTRO ── */
-#intro { position: fixed; top:0; left: 0;right:0;bottom: 0; background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+#intro { position: fixed; inset: 0; width: 100%; height: 100%; background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center; pointer-events: none; }
 #intro svg { overflow: visible; }
 #intro .diamond-outer { stroke-dasharray: 272; stroke-dashoffset: 272; animation: drawStroke 0.7s cubic-bezier(.4,0,.2,1) 0.2s forwards; }
 #intro .diamond-inner { stroke-dasharray: 204; stroke-dashoffset: 204; animation: drawStroke 0.5s cubic-bezier(.4,0,.2,1) 0.7s forwards; opacity: 0.4; }
@@ -49,7 +49,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-
 @keyframes introFade { to { opacity: 0; } }
 
 /* ── NAV ── */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; }
 .nav-logo { display: flex; align-items: center; gap: 0.6rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
 .nav-logo-mark { width: 22px; height: 22px; flex-shrink: 0; }
 .nav-links { display: flex; gap: 2.5rem; list-style: none; }
@@ -57,7 +57,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .nav-links a:hover { color: var(--ink); }
 
 /* ── HERO ── */
-.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 3rem 6rem; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+.hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 3rem 6rem; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
 .hero-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink3); margin-bottom: 1.5rem; }
 .hero-title { font-family: var(--serif); font-size: clamp(4rem, 11vw, 10rem); font-weight: 900; line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase; font-style: italic; max-width: 1000px; }
 .hero-title em { font-style: normal; color: var(--accent); }
@@ -235,7 +235,7 @@ footer { padding: 8rem 3rem 4rem; }
 @media (max-width: 768px) {
   nav { padding: 1.2rem 1.5rem; }
   .nav-links { display: none; }
-  .hero { padding: 0 1.5rem 4rem; padding-top:35vmax; }
+  .hero { padding: 6rem 1.5rem 4rem; min-height: unset; }
   section { padding: 5rem 1.5rem; }
   .project-header { grid-template-columns: 1fr; }
   .project-tags { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
@@ -247,16 +247,69 @@ footer { padding: 8rem 3rem 4rem; }
   .footer-top { grid-template-columns: 1fr; }
   .footer-links { align-items: flex-start; }
   .slider-arrow, .cursor, .cursor-ring { display: none; }
-  #intro {
-  position: fixed !important;
-  top: 0 !important; left: 0 !important;
-  right: 0 !important; bottom: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
 }
-  
-}
+
+  /* ── HAMBURGER MENU (mobile only) ── */
+  .hamburger { display: none; position: relative; z-index: 300; }
+  /* mobile menu always hidden by default regardless of screen size */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    z-index: 200;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-menu .menu-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 300;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+
+  }
 </style>
 </head>
 <body>
@@ -287,16 +340,16 @@ footer { padding: 8rem 3rem 4rem; }
     </svg>
     HOJB
   </a>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
-    
   </ul>
 </nav>
 
 <!-- HERO -->
-<section class="hero" style="border-bottom:1px solid var(--line);">
+<section class="hero" style="padding-top:0;border-bottom:1px solid var(--line);">
   <div class="hero-bg-text">JB</div>
   <p class="hero-eyebrow">House of Jean Batista — Est. 2026</p>
   <h1 class="hero-title">
@@ -435,9 +488,9 @@ footer { padding: 8rem 3rem 4rem; }
     <div class="slider-wrap">
       <button class="slider-arrow prev" onclick="slide(this,-1)">←</button>
       <div class="slider">
-        <div class="slide"><img src="train_distribution.png" style="height:380px;width:auto;display:block;"></div>
-        <div class="slide"><img src="eval_f1.png" style="height:380px;width:auto;display:block;"></div>
-        <div class="slide"><img src="model_comparison.png" style="height:380px;width:auto;display:block;"></div>
+        <div class="slide"><img src="train_distribution.png" style="height:380px;width:100%;object-fit:cover;display:block;" alt="Training distribution"></div>
+        <div class="slide"><img src="eval_f1.png" style="height:380px;width:100%;object-fit:cover;display:block;" alt="Evaluation F1"></div>
+        <div class="slide"><img src="model_comparison.png" style="height:380px;width:100%;object-fit:cover;display:block;" alt="Model comparison"></div>
       </div>
       <button class="slider-arrow next" onclick="slide(this,1)">→</button>
     </div>
@@ -532,6 +585,7 @@ footer { padding: 8rem 3rem 4rem; }
       <a href="https://github.com/Jeanwrld" target="_blank">GitHub</a>
       <a href="https://huggingface.co/sato2ru" target="_blank">HuggingFace</a>
       <a href="https://wordle-solver-tan.vercel.app/" target="_blank">Wordle.AI</a>
+      <a href="https://instagram.com/YOUR_HANDLE" target="_blank">Instagram</a>
       <a href="mailto:jeanwilde8@gmail.com">Email</a>
     </div>
   </div>
@@ -585,6 +639,47 @@ footer { padding: 8rem 3rem 4rem; }
 
   // Model toggle
   function toggleModel(btn){ btn.closest('.model-toggle-vis').querySelectorAll('.model-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
+
+  // Hamburger menu
+  function closeMenu() {
+    const h = document.getElementById('hamburger');
+    const m = document.getElementById('mobileMenu');
+    if (h) h.classList.remove('open');
+    if (m) m.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (!hamburger || !mobileMenu) return;
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    // links: close menu then scroll after short delay
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = a.getAttribute('href');
+        closeMenu();
+        setTimeout(() => {
+          const el = target === '#' ? document.body : document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      });
+    });
+  });
+
 </script>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu" id="mobileMenu">
+  <p class="menu-label">Navigation</p>
+  <a href="#work">Work</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</div>
+
 </body>
 </html>
