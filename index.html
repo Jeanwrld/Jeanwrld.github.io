@@ -184,11 +184,12 @@ section { padding: 8rem 3rem; border-bottom: 1px solid var(--line); }
 .slider::-webkit-scrollbar { display: none; }
 .slider.grabbing { cursor: grabbing; }
 .slide {
-  flex: 0 0 72%;          /* each slide takes 72% of width — next peeks at ~20% */
+  flex: 0 0 72%;
   scroll-snap-align: start;
   overflow: hidden;
   background: var(--bg2);
   transition: opacity 0.3s;
+  height: 360px;
 }
 .slide img { display: block; width: 100%; height: 380px; object-fit: cover; }
 .slide-placeholder { width: 100%; height: 380px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--ink3); text-transform: uppercase; }
@@ -242,7 +243,7 @@ footer { padding: 8rem 3rem 4rem; }
   .project-body { grid-template-columns: 1fr; }
   .wordle-hero { flex-direction: column; padding: 3rem 1.5rem; gap: 3rem; margin: 0 -1.5rem 2rem; }
   .slider { padding-right: 2.5rem; }
-  .slide { flex: 0 0 85%; }
+  .slide { flex: 0 0 88%; height: 260px; }
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .footer-top { grid-template-columns: 1fr; }
   .footer-links { align-items: flex-start; }
@@ -488,9 +489,9 @@ footer { padding: 8rem 3rem 4rem; }
     <div class="slider-wrap">
       <button class="slider-arrow prev" onclick="slide(this,-1)">←</button>
       <div class="slider">
-        <div class="slide"><img src="train_distribution.png" style="height:380px;width:100%;object-fit:cover;display:block;" alt="Training distribution"></div>
-        <div class="slide"><img src="eval_f1.png" style="height:380px;width:100%;object-fit:cover;display:block;" alt="Evaluation F1"></div>
-        <div class="slide"><img src="model_comparison.png" style="height:380px;width:100%;object-fit:cover;display:block;" alt="Model comparison"></div>
+        <div class="slide"><img src="train_distribution.png" style="width:100%;height:100%;object-fit:contain;display:block;background:var(--bg2);" alt="Training distribution"></div>
+        <div class="slide"><img src="eval_f1.png" style="width:100%;height:100%;object-fit:contain;display:block;background:var(--bg2);" alt="Evaluation F1"></div>
+        <div class="slide"><img src="model_comparison.png" style="width:100%;height:100%;object-fit:contain;display:block;background:var(--bg2);" alt="Model comparison"></div>
       </div>
       <button class="slider-arrow next" onclick="slide(this,1)">→</button>
     </div>
