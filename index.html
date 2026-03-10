@@ -28,7 +28,8 @@
 
 /* ── per-project accent overrides ── */
 .project-wordle  { --p-accent: #6aaa64; }   /* Wordle green */
-.project-swahili { --p-accent: #d4845a; }   /* terracotta / warm saffron */
+.project-swahili    { --p-accent: #d4845a; }   /* terracotta / warm saffron */
+.project-liedetector { --p-accent: #c0392b; }  /* deep crimson */
 
 html { scroll-behavior: smooth; overflow-x: clip; }
 body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.6; overflow-x: clip; max-width: 100vw; }
@@ -126,6 +127,41 @@ section { padding: 8rem 3rem; border-bottom: 1px solid var(--line); overflow-x: 
 /* slider arrow accent on hover */
 .project-wordle .slider-arrow:hover  { border-color: var(--p-accent); color: var(--p-accent); }
 .project-swahili .slider-arrow:hover { border-color: var(--p-accent); color: var(--p-accent); }
+
+/* ── LIE DETECTOR accent rules ── */
+.project-liedetector .project-link { color: var(--p-accent); border-bottom-color: rgba(192,57,43,0.25); }
+.project-liedetector .project-link:hover { border-bottom-color: var(--p-accent); }
+.project-liedetector .callout  { border-left-color: var(--p-accent); background: rgba(192,57,43,0.04); }
+.project-liedetector .callout-label { color: var(--p-accent); }
+.project-liedetector .stat-num span { color: var(--p-accent); }
+.project-liedetector .detail-cards .detail-card:first-child { border-left: 2px solid var(--p-accent); }
+.project-liedetector .slider-arrow:hover { border-color: var(--p-accent); color: var(--p-accent); }
+
+/* ── DECEPTION SIGNAL BARS visual ── */
+.signal-bars { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+.signal-row { display: flex; flex-direction: column; gap: 5px; }
+.signal-label-row { display: flex; justify-content: space-between; align-items: baseline; }
+.signal-name { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink3); }
+.signal-pct  { font-family: var(--mono); font-size: 0.56rem; color: var(--ink3); }
+.signal-track { height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.signal-fill  { height: 100%; border-radius: 2px; background: #c0392b; transform-origin: left; animation: barGrow 1.2s cubic-bezier(.16,1,.3,1) both; }
+@keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.signal-fill.voice   { background: #c0392b; animation-delay: 0.1s; }
+.signal-fill.facial  { background: rgba(192,57,43,0.55); animation-delay: 0.2s; }
+.signal-fill.body    { background: rgba(192,57,43,0.4); animation-delay: 0.3s; }
+.signal-fill.lang    { background: rgba(192,57,43,0.7); animation-delay: 0.4s; }
+
+.verdict-banner { width: calc(100% + 6rem); margin: 0 -3rem 2.5rem; background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 4rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 4rem; overflow: hidden; }
+.verdict-left { flex-shrink: 0; }
+.verdict-word { font-family: var(--serif); font-size: clamp(3rem, 7vw, 6rem); font-weight: 900; font-style: italic; line-height: 0.95; color: #c0392b; letter-spacing: -0.02em; }
+.verdict-sub  { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink3); margin-top: 0.8rem; }
+.verdict-bar  { flex: 1; max-width: 480px; }
+.verdict-bar-track { height: 5px; background: var(--line); border-radius: 3px; overflow: hidden; margin-bottom: 1.5rem; }
+.verdict-bar-fill  { height: 100%; width: 78%; background: linear-gradient(90deg, rgba(192,57,43,0.4), #c0392b); border-radius: 3px; animation: barGrow 1.4s cubic-bezier(.16,1,.3,1) 0.3s both; }
+.verdict-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.verdict-stat-num   { font-family: var(--serif); font-size: 2rem; font-weight: 900; color: var(--ink); }
+.verdict-stat-num span { color: #c0392b; }
+.verdict-stat-label { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin-top: 0.2rem; }
 
 /* ── WORDLE VISUAL ── */
 .wordle-hero { width: calc(100% + 6rem); margin: 0 -3rem 2.5rem; background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 5rem 3rem; display: flex; align-items: center; justify-content: center; gap: 6rem; overflow: hidden; }
@@ -250,6 +286,10 @@ footer { padding: 8rem 3rem 4rem; }
   .footer-top { grid-template-columns: 1fr; }
   .footer-links { align-items: flex-start; }
   .slider-arrow, .cursor, .cursor-ring { display: none; }
+  .verdict-banner { flex-direction: column; gap: 2rem; padding: 3rem 1.5rem; margin: 0 -1.5rem 2rem; width: calc(100% + 3rem); }
+  .verdict-stats { grid-template-columns: repeat(3,1fr); gap: 0.75rem; }
+  .verdict-word { font-size: 3rem; }
+  .verdict-bar { max-width: 100%; width: 100%; }
 }
 
   /* ── HAMBURGER MENU (mobile only) ── */
@@ -369,6 +409,99 @@ footer { padding: 8rem 3rem 4rem; }
 <!-- WORK -->
 <section id="work" class="section-reveal">
   <p class="section-label reveal">Selected Work</p>
+
+  <!-- ── LIE TO ME ── -->
+  <div class="project project-liedetector reveal">
+    <div class="project-header">
+      <div>
+        <p class="project-client">✣HOJB — Research · Product</p>
+        <h2 class="project-title">Lie to Me</h2>
+        <p class="project-hook">"A behavioral analysis system that reads faces, voices, bodies, and words — and caught Lance Armstrong on the first try."</p>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Computer Vision</span>
+        <span class="tag">Multimodal ML</span>
+        <span class="tag">Behavioral Science · 2026</span>
+      </div>
+    </div>
+
+    <div class="verdict-banner">
+      <div class="verdict-left">
+        <div class="verdict-word">Deceptive.</div>
+        <div class="verdict-sub">78% probability · 4 cues flagged</div>
+      </div>
+      <div class="verdict-bar">
+        <div class="verdict-bar-track"><div class="verdict-bar-fill"></div></div>
+        <div class="verdict-stats">
+          <div>
+            <div class="verdict-stat-num">0<span>.94</span></div>
+            <div class="verdict-stat-label">AUC-ROC</div>
+          </div>
+          <div>
+            <div class="verdict-stat-num">121</div>
+            <div class="verdict-stat-label">Training Clips</div>
+          </div>
+          <div>
+            <div class="verdict-stat-num">4</div>
+            <div class="verdict-stat-label">Modalities</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-body">
+      <div>
+        <p class="project-desc">Trained from scratch on the <strong>Real-Life Trial Dataset</strong> — 121 labeled courtroom testimony clips. Four extractors run in parallel: DeepFace reads facial emotion, librosa extracts pitch and MFCCs, MediaPipe tracks gaze aversion and postural shifts, and Whisper transcribes speech for linguistic pattern analysis.</p>
+        <p class="project-desc">A Random Forest fusion model learns which combinations of signals predict deception. AUC 0.94 on held-out test data — beating the published baseline of 0.77–0.82 from the original paper. Deployed as a live web app on HuggingFace Spaces.</p>
+        <div class="callout">
+          <p class="callout-label">Out-of-Domain Validation</p>
+          <p class="callout-text">Tested on Lance Armstrong's doping denial interview — the model flagged it as deceptive via <strong>low first-person pronoun use</strong>, consistent with Pennebaker's psychological distancing research. The model had never seen footage outside a courtroom.</p>
+        </div>
+        <div class="project-links">
+          <a href="https://huggingface.co/spaces/sato2ru/lie-to-me" target="_blank" class="project-link">Live Demo →</a>
+          <a href="https://huggingface.co/sato2ru/lie-to-me-detector" target="_blank" class="project-link">HuggingFace →</a>
+        </div>
+      </div>
+      <div class="detail-cards">
+        <div class="detail-card">
+          <p class="detail-card-label">AUC-ROC — Real Data</p>
+          <p class="detail-card-val">0.94</p>
+          <p class="detail-card-sub">vs published baseline of 0.77–0.82</p>
+        </div>
+        <div class="detail-card">
+          <p class="detail-card-label">Top Signal</p>
+          <p class="detail-card-val" style="font-size:1.1rem;">emo_surprise</p>
+          <p class="detail-card-sub">Hardest emotion to consciously fake</p>
+        </div>
+        <div class="detail-card">
+          <p class="detail-card-label">Training Data</p>
+          <p class="detail-card-val">121</p>
+          <p class="detail-card-sub">Real-Life Trial Dataset courtroom clips</p>
+        </div>
+        <div class="detail-card" style="border:1px solid var(--line);padding:1.25rem 1.5rem;">
+          <p class="detail-card-label" style="margin-bottom:1rem;">Modality Breakdown — Lance Armstrong</p>
+          <div class="signal-bars">
+            <div class="signal-row">
+              <div class="signal-label-row"><span class="signal-name">Language</span><span class="signal-pct">100%</span></div>
+              <div class="signal-track"><div class="signal-fill lang" style="width:100%"></div></div>
+            </div>
+            <div class="signal-row">
+              <div class="signal-label-row"><span class="signal-name">Facial</span><span class="signal-pct">18%</span></div>
+              <div class="signal-track"><div class="signal-fill facial" style="width:18%"></div></div>
+            </div>
+            <div class="signal-row">
+              <div class="signal-label-row"><span class="signal-name">Body</span><span class="signal-pct">13%</span></div>
+              <div class="signal-track"><div class="signal-fill body" style="width:13%"></div></div>
+            </div>
+            <div class="signal-row">
+              <div class="signal-label-row"><span class="signal-name">Voice</span><span class="signal-pct">0%</span></div>
+              <div class="signal-track"><div class="signal-fill voice" style="width:0%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ── WORDLE.AI ── -->
   <div class="project project-wordle reveal">
@@ -547,6 +680,13 @@ footer { padding: 8rem 3rem 4rem; }
     <div class="marquee-pill"><div class="dot"></div>Swahili NLP</div>
     <div class="marquee-pill"><div class="dot"></div>AfroLM</div>
     <div class="marquee-pill"><div class="dot"></div>Emergent Behavior</div>
+    <div class="marquee-pill"><div class="dot"></div>Computer Vision</div>
+    <div class="marquee-pill"><div class="dot"></div>Behavioral Analysis</div>
+    <div class="marquee-pill"><div class="dot"></div>MediaPipe</div>
+    <div class="marquee-pill"><div class="dot"></div>Whisper</div>
+    <div class="marquee-pill"><div class="dot"></div>Multimodal ML</div>
+    <div class="marquee-pill"><div class="dot"></div>Deception Detection</div>
+    <div class="marquee-pill"><div class="dot"></div>Gradio</div>
     <div class="marquee-pill"><div class="dot"></div>Reinforcement Learning</div>
     <div class="marquee-pill"><div class="dot"></div>Supervised Learning</div>
     <div class="marquee-pill"><div class="dot"></div>NLP</div>
@@ -559,6 +699,13 @@ footer { padding: 8rem 3rem 4rem; }
     <div class="marquee-pill"><div class="dot"></div>Swahili NLP</div>
     <div class="marquee-pill"><div class="dot"></div>AfroLM</div>
     <div class="marquee-pill"><div class="dot"></div>Emergent Behavior</div>
+    <div class="marquee-pill"><div class="dot"></div>Computer Vision</div>
+    <div class="marquee-pill"><div class="dot"></div>Behavioral Analysis</div>
+    <div class="marquee-pill"><div class="dot"></div>MediaPipe</div>
+    <div class="marquee-pill"><div class="dot"></div>Whisper</div>
+    <div class="marquee-pill"><div class="dot"></div>Multimodal ML</div>
+    <div class="marquee-pill"><div class="dot"></div>Deception Detection</div>
+    <div class="marquee-pill"><div class="dot"></div>Gradio</div>
   </div>
 </div>
 
@@ -571,7 +718,7 @@ footer { padding: 8rem 3rem 4rem; }
       <p class="about-eyebrow">Jean Batista — Founder, ✣HOJB</p>
       <h2 class="about-heading">Building at the edge of what's known.</h2>
       <p class="about-body">I'm the founder of <span class="hojb-mark">✣House of Jean Batista (HOJB)</span> — a studio I'm building to run my own products and explore ideas at the intersection of machine learning and design.</p>
-      <p class="about-body">My current work is in ML research and engineering: training models, studying how they learn, and making the results accessible through good interfaces. My <a href="https://huggingface.co/sato2ru/wordle-solver" target="_blank">Wordle solvers</a> are live on HuggingFace. My <a href="https://huggingface.co/sato2ru/swahili-emotion-afrolm" target="_blank">Swahili emotion model</a> fine-tunes AfroLM for African-language NLP.</p>
+      <p class="about-body">My current work is in ML research and engineering: training models, studying how they learn, and making the results accessible through good interfaces. My <a href="https://huggingface.co/sato2ru/wordle-solver" target="_blank">Wordle solvers</a> are live on HuggingFace. My <a href="https://huggingface.co/sato2ru/swahili-emotion-afrolm" target="_blank">Swahili emotion model</a> fine-tunes AfroLM for African-language NLP. My <a href="https://huggingface.co/spaces/sato2ru/lie-to-me" target="_blank">Lie to Me detector</a> reads faces, voices, and language to flag deception — AUC 0.94 on real courtroom footage.</p>
       <p class="about-body">I believe the most interesting work happens when rigor and curiosity overlap. <strong>HOJB has a point of view.</strong></p>
     </div>
   </div>
@@ -607,7 +754,7 @@ footer { padding: 8rem 3rem 4rem; }
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Intro
   setTimeout(() => { document.getElementById('intro').style.display = 'none'; }, 2400);
 
